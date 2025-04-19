@@ -33,3 +33,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Repositórios embutidos
+/igorss/
+/v0-meditacao-e-musica/

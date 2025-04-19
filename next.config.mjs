@@ -34,8 +34,29 @@ const nextConfig = {
 
   // Desativar recursos que podem causar problemas de build
   experimental: {
-    appDir: false,
+    appDir: true,
     serverActions: false,
+  },
+  
+  // Configuração para lidar corretamente com caracteres UTF-8
+  i18n: {
+    locales: ['pt-BR'],
+    defaultLocale: 'pt-BR',
+  },
+  
+  // Permitir redirecionamentos e headers
+  headers: async () => {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/html; charset=utf-8',
+          },
+        ],
+      },
+    ];
   },
 }
 

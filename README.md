@@ -1,71 +1,81 @@
-# Wellness Platform
+# Neureon - Plataforma de Bem-estar Mental
 
-Uma plataforma de bem-estar com sessões de áudio motivacionais e meditativas.
+Neureon é uma plataforma de meditação e bem-estar mental que oferece áudios de meditação e conteúdos para potencializar sua cognição e bem-estar mental.
 
-## Funcionalidades
+## 🚀 Melhorias Implementadas
 
-- Player de áudio interativo
-- Sessões motivacionais
-- Acompanhamento de progresso
-- Interface acessível
-- Persistência de dados
+1. **Correção de Problemas de Codificação UTF-8**
+   - Implementado um utilitário para corrigir caracteres especiais em português
+   - Adicionado middleware para garantir headers de codificação corretos
+   - Utilização de HOC (High Order Component) para aplicação automática das correções
 
-## Tecnologias
+2. **Workflows de CI/CD**
+   - Criado workflow simplificado main.yml para integração e deploy contínuos
+   - Workflow otimizado deploy.yml para GitHub Pages
+   - Configuração de cache e otimização de build
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
+3. **Configuração Next.js**
+   - Ajuste de next.config.mjs para melhor compatibilidade com GitHub Pages
+   - Configuração de i18n para suporte a português brasileiro
+   - Adição de headers para melhorar segurança e desempenho
 
-## Como Executar Localmente
+## 🛠️ Tecnologias Utilizadas
 
-1. Clone o repositório:
+- **Next.js** - Framework React com renderização híbrida
+- **Tailwind CSS** - Framework CSS utilitário
+- **React** - Biblioteca para construção de interfaces
+- **TypeScript** - Superset tipado do JavaScript
+- **GitHub Actions** - Para workflows de CI/CD
+
+## 📋 Pré-requisitos
+
+- Node.js 18.x ou superior
+- npm ou yarn
+
+## 🔧 Instalação
+
 ```bash
-git clone https://github.com/seu-usuario/wellness-platform.git
-cd wellness-platform
-```
-
-2. Instale as dependências:
-```bash
+# Instalar dependências
 npm install
-```
 
-3. Execute o projeto:
-```bash
+# Executar em modo de desenvolvimento
 npm run dev
+
+# Compilar para produção
+npm run build
+
+# Iniciar em modo de produção
+npm start
 ```
 
-4. Acesse `http://localhost:3000`
+## 📦 Deployment
 
-## Deploy
+O projeto está configurado para deploy automático no GitHub Pages através de GitHub Actions. Sempre que houver um push para a branch main, o workflow de CI/CD será acionado.
 
-O projeto está configurado para deploy automático no GitHub Pages. Cada push na branch `main` irá:
-
-1. Construir o projeto
-2. Gerar os arquivos estáticos
-3. Fazer deploy no GitHub Pages
-
-Acesse: https://seu-usuario.github.io/wellness-platform
-
-## Estrutura do Projeto
+## 🧩 Estrutura do Projeto
 
 ```
 wellness-platform/
-├── app/
-│   ├── sessoes/
-│   │   └── motivacao/
-│   └── page.tsx
-├── components/
-│   └── audio-player.tsx
-├── public/
-│   └── audio/
-└── styles/
+├── .github/          # Configurações de GitHub Actions
+├── app/              # Páginas e componentes da aplicação
+├── components/       # Componentes React reutilizáveis
+├── lib/              # Funções utilitárias e helpers
+├── public/           # Arquivos estáticos
+├── styles/           # Estilos globais
+└── ...               # Outros arquivos de configuração
 ```
 
-## Contribuição
+## 🤝 Contribuição
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request 
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para mais detalhes.
+
+## ✨ Features
+
+- **Sessões de Meditação**: Áudios com diferentes frequências para diferentes objetivos
+- **Sistema de Assinatura**: Acesso a conteúdo premium através de assinatura
+- **Interface Moderna**: Design elegante e responsivo
+- **Experiência Personalizada**: Recomendações baseadas nas preferências do usuário 
