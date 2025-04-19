@@ -1,39 +1,41 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Configurações de compilação básicas
+  reactStrictMode: false,
+  swcMinify: true,
+
+  // Ignorar erros durante a compilação
   eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {
     ignoreBuildErrors: true,
   },
+
+  // Configuração para GitHub Pages
   output: 'export',
+  distDir: 'out',
+  
+  // Configurações de imagem para exportação estática
   images: {
     unoptimized: true,
-  },
-  webpack: (config) => {
-    // Ignorar erros de importação durante build
-    config.optimization = {
-      ...config.optimization,
-      // Ignorar erros não fatais ao compilar
-      minimize: true,
-      splitChunks: {
-        chunks: 'all',
+    domains: ['localhost'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
       },
-    }
-    return config
+    ],
   },
+
+  // Configurações de caminho base para GitHub Pages
   basePath: process.env.NODE_ENV === 'production' ? '/wellness-platform' : '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/wellness-platform/' : '',
-  // Desabilitar verificações rigorosas durante build
+
+  // Desativar recursos que podem causar problemas de build
   experimental: {
-    strictNextHead: false,
-  },
-  // Ignorar erros de build
-  onDemandEntries: {
-    // Período em ms onde o servidor irá manter páginas no buffer
-    maxInactiveAge: 25 * 1000,
-    // Páginas que devem ser sempre renderizadas
-    pagesBufferLength: 2,
+    appDir: false,
+    serverActions: false,
   },
 }
 

@@ -2,66 +2,61 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 # Configuração de permissões para o token GITHUB_TOKEN
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
-# Configuração do ambiente
-env:
-  NODE_ENV: production
-  CI: false # Desabilita tratamento de avisos como erros
+# Permitir apenas uma execução de deploy simultânea
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  # Build job
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          persist-credentials: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+          node-version: "18"
+          cache: npm
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-
+          static_site_generator: next
+      
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
-        continue-on-error: true
-
-      - name: Create empty node_modules directories if missing
-        run: mkdir -p node_modules/.cache
-
-      - name: Fix potential permission issues
-        run: |
-          mkdir -p node_modules/.cache
-          chmod -R 777 node_modules/.cache || true
-
-      - name: Build 
-        run: |
-          CI=false npm run build
-          if [ ! -d "out" ]; then
-            echo "Creating out directory as it wasn't created"
-            mkdir -p out
-            echo "<html><body><h1>Site em construção</h1></body></html>" > out/index.html
-          fi
+        run: npm ci || npm install --legacy-peer-deps
+      
+      - name: Build with Next.js
         env:
           NODE_ENV: production
-          CI: false
-
-      - name: Configure output directory
-        run: |
-          touch out/.nojekyll
-
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+          NEXT_PUBLIC_BASE_PATH: /wellness-platform
+        run: npm run build
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: out
-          branch: gh-pages
-          clean: true
+          path: ./out
+
+  # Deploy job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
